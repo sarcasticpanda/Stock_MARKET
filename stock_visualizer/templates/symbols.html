@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="text-3xl font-bold mb-6">Popular Stock Symbols</h1>
+
+   <!-- Custom Symbol Input -->
+<div class="mb-6 bg-gray-800 p-6 rounded-lg shadow-lg">
+    <h3 class="text-lg font-semibold mb-4">Add a Custom Symbol</h3>
+    <form method="POST" class="flex items-center space-x-4">
+        <input type="text" name="custom_symbol" placeholder="Enter Symbol (e.g., NVDA)" required
+               class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button type="submit" class="p-2 bg-blue-600 rounded hover:bg-blue-700 transition custom-symbol-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+        </button>
+    </form>
+    {% if error_message %}
+        <div class="mt-4 bg-red-600 p-4 rounded-lg shadow-lg">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+</div>
+
+    <!-- Popular Symbols -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for symbol in symbols %}
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold mb-4">{{ symbol }}</h3>
+                <a href="/stock/{{ symbol }}" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">Track {{ symbol }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Ensure Plotly is loaded from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="h-8 mr-2">
+                <a href="/" class="text-2xl font-bold">Stock Dashboard</a>
+            </div>
+            <div>
+                <a href="/" class="px-4 py-2 hover:bg-gray-700 rounded">Dashboard</a>
+                <a href="/watchlist" class="px-4 py-2 hover:bg-gray-700 rounded">Watchlist</a>
+                <a href="/pinned" class="px-4 py-2 hover:bg-gray-700 rounded">Pinned Charts</a>
+                <a href="/symbols" class="px-4 py-2 hover:bg-gray-700 rounded">Symbols</a>
+                <button id="theme-toggle" class="px-4 py-2 bg-gray-600 rounded hover:bg-gray-500">Toggle Theme</button>
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+body.light-theme {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+body.light-theme .bg-gray-800 {
+    background-color: #fff;
+    color: #333;
+}
+
+body.light-theme .bg-gray-700 {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+body.light-theme .text-white {
+    color: #333;
+}
+/* Existing styles */
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+body.light-theme {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+body.light-theme .bg-gray-800 {
+    background-color: #fff;
+    color: #333;
+}
+
+body.light-theme .bg-gray-700 {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+body.light-theme .text-white {
+    color: #333;
+}
+
+/* New styles for the custom symbol button */
+.custom-symbol-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.custom-symbol-button:hover {
+    transform: scale(1.1);
+    background-color: #2563eb; /* Slightly darker blue on hover */
+}
+
+.custom-symbol-button svg {
+    transition: stroke 0.3s ease;
+}
+
+.custom-symbol-button:hover svg {
+    stroke: #ffffff; /* White stroke on hover */
+}

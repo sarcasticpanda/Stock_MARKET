@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="text-3xl font-bold mb-6">Watchlist</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for symbol in watchlist %}
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold mb-4">{{ symbol }}</h3>
+                <a href="/stock/{{ symbol }}" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">View Details</a>
+            </div>
+        {% endfor %}
+        {% if not watchlist %}
+            <p class="text-center col-span-3">Your watchlist is empty. Add stocks from the stock analysis page!</p>
+        {% endif %}
+    </div>
+{% endblock %}

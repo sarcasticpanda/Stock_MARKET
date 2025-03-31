@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="text-3xl font-bold mb-6">{{ symbol }} Analysis</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Input Section -->
+        <div class="col-span-1 bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-semibold mb-4">Track {{ symbol }}</h2>
+            <form method="POST" class="space-y-4">
+                <div>
+                    <input type="number" step="0.01" name="threshold" placeholder="Price Alert Threshold"
+                           class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <select name="period" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none">
+                        <option value="1d" selected>1 Day (1h Candles)</option>
+                        <option value="5d">1 Week (4h Candles)</option>
+                        <option value="1mo">1 Month (Daily Candles)</option>
+                    </select>
+                </div>
+                <div>
+                    <select name="chart_type" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none">
+                        <option value="candlestick" selected>Candlestick</option>
+                        <option value="line">Line</option>
+                        <option value="ohlc">OHLC</option>
+                    </select>
+                </div>
+                <button type="submit" name="update" class="w-full p-2 bg-blue-600 rounded hover:bg-blue-700 transition">Update Chart</button>
+
+                <h3 class="text-lg mt-6">Compare with Historical Data</h3>
+                <div>
+                    <input type="date" name="start_date" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600">
+                </div>
+                <div>
+                    <input type="date" name="end_date" class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600">
+                </div>
+                <div>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="compare" value="yes" class="form-checkbox text-blue-600">
+                        <span class="ml-2">Compare</span>
+                    </label>
+                </div>
+                <button type="submit" name="update" class="w-full p-2 bg-blue-600 rounded hover:bg-blue-700 transition">Update Chart</button>
+                <button type="submit" name="export_csv" class="w-full p-2 bg-green-600 rounded hover:bg-green-700 transition">Export CSV</button>
+
+                <h3 class="text-lg mt-6">Actions</h3>
+                <button type="submit" name="add_to_watchlist" class="w-full p-2 bg-purple-600 rounded hover:bg-purple-700 transition">Add to Watchlist</button>
+                <button type="submit" name="remove_from_watchlist" class="w-full p-2 bg-red-600 rounded hover:bg-red-700 transition">Remove from Watchlist</button>
+                <button type="submit" name="add_to_pinned" class="w-full p-2 bg-yellow-600 rounded hover:bg-yellow-700 transition">Pin Chart</button>
+                <button type="submit" name="remove_from_pinned" class="w-full p-2 bg-red-600 rounded hover:bg-red-700 transition">Unpin Chart</button>
+            </form>
+        </div>
+
+        <!-- Chart and Alerts Section -->
+        <div class="col-span-2">
+            {% if error_message %}
+                <div class="bg-red-600 p-4 rounded-lg shadow-lg mb-6">
+                    <p>{{ error_message }}</p>
+                </div>
+            {% endif %}
+
+            {% if alert %}
+                <div class="bg-yellow-600 p-4 rounded-lg shadow-lg mb-6 animate-pulse">
+                    <p>{{ alert }}</p>
+                </div>
+            {% endif %}
+
+            {% if chart %}
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div>{{ chart | safe }}</div>
+                    <!-- Check if data exists and is not empty -->
+                    {% if data is not none and not data.empty %}
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold">Recent Data</h3>
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="bg-gray-700">
+                                        <th class="p-2">Date</th>
+                                        <th class="p-2">Open</th>
+                                        <th class="p-2">High</th>
+                                        <th class="p-2">Low</th>
+                                        <th class="p-2">Close</th>
+                                        <th class="p-2">Volume</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for index, row in data.tail(5).iterrows() %}
+                                        <tr class="border-t border-gray-600">
+                                            <td class="p-2">{{ index }}</td>
+                                            <td class="p-2">{{ row['Open']|round(2) }}</td>
+                                            <td class="p-2">{{ row['High']|round(2) }}</td>
+                                            <td class="p-2">{{ row['Low']|round(2) }}</td>
+                                            <td class="p-2">{{ row['Close']|round(2) }}</td>
+                                            <td class="p-2">{{ row['Volume']|int }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <p class="text-center">Enter a stock symbol to see the chart.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
